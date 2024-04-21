@@ -1,7 +1,4 @@
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 
 public class Main {
@@ -10,20 +7,33 @@ public class Main {
             String path = args[0] + "\\" + args[1];
             FileReader input = new FileReader(path);
             BufferedReader reader = new BufferedReader(input);
+            PushbackReader pushback = new PushbackReader(reader);
 
             //análise Léxica
             int caracterAtual;
+            boolean adicionarPV = false; //adiciona um ";" caso seja verdadeiro
             StringBuilder tokenBuilder = new StringBuilder();
             ArrayList<Token> tokenList = new ArrayList<>();
-            while ((caracterAtual = reader.read()) != -1){
+            while ((caracterAtual = pushback.read()) != -1){
                 System.out.println(tokenBuilder.toString());
-                if (caracterAtual != 32 && caracterAtual != '\n' && caracterAtual != '\r'){
-                    tokenBuilder.append((char) caracterAtual);
+                // IMPORTANTE: Reestruturar isso para usar o TokenUtils.peek() para procurar caracteres ao invés de só espaços
+                if(caracterAtual != 32 && caracterAtual != '\n' && caracterAtual != '\r'){//checa por espaços ou quebras de linha
+                    tokenBuilder.append(Character.toChars(caracterAtual)[0]);
+                    if (TokenUtils.peek(pushback) == 59) {
+                        Token tokenAtual = TokenUtils.checkToken(tokenBuilder);
+                        if (tokenAtual != null) {
+                            tokenList.add(tokenAtual);
+                            tokenList.add(new Token(TokenType.semicolon, new char[]{';'}));
+                        }
+                        tokenBuilder.setLength(0);
+                    }
                 }else{
                     if(!tokenBuilder.isEmpty()){
-                        Token newToken = new Token(TokenType.id, tokenBuilder.toString().toCharArray());
+                        Token tokenAtual = TokenUtils.checkToken(tokenBuilder);
+                        if(tokenAtual != null){
+                            tokenList.add(tokenAtual);
+                        }
                         tokenBuilder.setLength(0);
-                        tokenList.add(newToken);
                     }
                 }
             }
