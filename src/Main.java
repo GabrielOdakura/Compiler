@@ -23,7 +23,14 @@ public class Main {
                         tokenBuilder.append(Character.toChars(pushback.read())[0]);
                     }
                     tokenList.add(new Token(TokenType.INT_LIT, tokenBuilder.toString().toCharArray()));
-                    tokenBuilder.setLength(0);// IMPORTANTE: Reestruturar isso para usar o TokenUtils.peek() para procurar caracteres ao invés de só espaços
+                    tokenBuilder.setLength(0);
+                }else if(caracterAtual == 39) {//procura por um 'C', C sendo um caracter qualquer
+                    if(tokenBuilder.length() == 1){
+                        tokenBuilder.append(Character.toChars(caracterAtual)[0]);
+                        tokenBuilder.append(Character.toChars(TokenUtils.peek(pushback))[0]);
+                    }else{
+
+                    }
                 }else if(caracterAtual != 32 && caracterAtual != '\n' && caracterAtual != '\r'){//checa por espaços ou quebras de linha
                     tokenBuilder.append(Character.toChars(caracterAtual)[0]);
                     if (TokenUtils.peek(pushback) == 59) {
