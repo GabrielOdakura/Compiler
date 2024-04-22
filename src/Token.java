@@ -14,6 +14,6 @@ public class Token {
     public String toString() {
         String teste = "";
         for(int i = 0; i < this.cadeia.length; i++) teste = teste + cadeia[i];
-        return "Tipo: " + this.tipo + "\nCadeia: " + teste;
+        return "[Tipo: " + this.tipo + "]\t||\t[Cadeia: " + teste + "]";
     }
 }

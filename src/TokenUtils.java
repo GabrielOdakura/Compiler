@@ -5,39 +5,43 @@ public class TokenUtils {
     public static Token checkToken (StringBuilder tokenBuilder){
         Token newToken = null;
         if(tokenBuilder.toString().equals("principal")){
-            newToken = new Token(TokenType.principal, tokenBuilder.toString().toCharArray());
+            newToken = new Token(TokenType.PRINCIPAL, tokenBuilder.toString().toCharArray());
         }else if(tokenBuilder.toString().equals("pf")){
-            newToken = new Token(TokenType.pf, tokenBuilder.toString().toCharArray());
+            newToken = new Token(TokenType.PF, tokenBuilder.toString().toCharArray());
         }else if(tokenBuilder.toString().equals("obg")){
-            newToken = new Token(TokenType.obg, tokenBuilder.toString().toCharArray());
+            newToken = new Token(TokenType.OBG, tokenBuilder.toString().toCharArray());
         }else if(tokenBuilder.toString().equals("int")){
-            newToken = new Token(TokenType.Int, tokenBuilder.toString().toCharArray());
+            newToken = new Token(TokenType.INT, tokenBuilder.toString().toCharArray());
         }else if(tokenBuilder.toString().equals("car")){
-            newToken = new Token(TokenType.car, tokenBuilder.toString().toCharArray());
+            newToken = new Token(TokenType.CAR, tokenBuilder.toString().toCharArray());
         }else if(tokenBuilder.toString().equals("bool")){
-            newToken = new Token(TokenType.bool, tokenBuilder.toString().toCharArray());
+            newToken = new Token(TokenType.BOOL, tokenBuilder.toString().toCharArray());
         }else if(tokenBuilder.toString().equals("faca")){
-            newToken = new Token(TokenType.faca, tokenBuilder.toString().toCharArray());
+            newToken = new Token(TokenType.FACA, tokenBuilder.toString().toCharArray());
         }else if(tokenBuilder.toString().equals("enquanto")){
-            newToken = new Token(TokenType.enquanto, tokenBuilder.toString().toCharArray());
+            newToken = new Token(TokenType.ENQUANTO, tokenBuilder.toString().toCharArray());
         }else if(tokenBuilder.toString().equals("para")){
-            newToken = new Token(TokenType.para, tokenBuilder.toString().toCharArray());
+            newToken = new Token(TokenType.PARA, tokenBuilder.toString().toCharArray());
         }else if(tokenBuilder.toString().equals("retornar")){
-            newToken = new Token(TokenType.retornar, tokenBuilder.toString().toCharArray());
+            newToken = new Token(TokenType.RETORNAR, tokenBuilder.toString().toCharArray());
         }else if(tokenBuilder.toString().equals("se")){
-            newToken = new Token(TokenType.se, tokenBuilder.toString().toCharArray());
+            newToken = new Token(TokenType.SE, tokenBuilder.toString().toCharArray());
         }else if(tokenBuilder.toString().equals("ou")){
-            newToken = new Token(TokenType.ou, tokenBuilder.toString().toCharArray());
+            newToken = new Token(TokenType.OU, tokenBuilder.toString().toCharArray());
         }else if(tokenBuilder.toString().equals("+")){
-            newToken = new Token(TokenType.mais, tokenBuilder.toString().toCharArray());
+            newToken = new Token(TokenType.MAIS, tokenBuilder.toString().toCharArray());
         }else if(tokenBuilder.toString().equals("-")){
-            newToken = new Token(TokenType.menos, tokenBuilder.toString().toCharArray());
+            newToken = new Token(TokenType.MENOS, tokenBuilder.toString().toCharArray());
         }else if(tokenBuilder.toString().equals("*")){
-            newToken = new Token(TokenType.mult, tokenBuilder.toString().toCharArray());
+            newToken = new Token(TokenType.MULT, tokenBuilder.toString().toCharArray());
         }else if(tokenBuilder.toString().equals(";")){
-            newToken = new Token(TokenType.semicolon, tokenBuilder.toString().toCharArray());
+            newToken = new Token(TokenType.SEMICOLON, tokenBuilder.toString().toCharArray());
+        }else if(tokenBuilder.toString().equals("VERDADEIRO")){
+            newToken = new Token(TokenType.BOOL_LIT, tokenBuilder.toString().toCharArray());
+        }else if(tokenBuilder.toString().equals("FALSO")){
+            newToken = new Token(TokenType.BOOL_LIT, tokenBuilder.toString().toCharArray());
         }else {
-            newToken = new Token(TokenType.id, tokenBuilder.toString().toCharArray());
+            newToken = new Token(TokenType.ID, tokenBuilder.toString().toCharArray());
         }
         return newToken;
     }

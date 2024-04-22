@@ -14,16 +14,23 @@ public class Main {
             boolean adicionarPV = false; //adiciona um ";" caso seja verdadeiro
             StringBuilder tokenBuilder = new StringBuilder();
             ArrayList<Token> tokenList = new ArrayList<>();
-            while ((caracterAtual = pushback.read()) != -1){
-                System.out.println(tokenBuilder.toString());
-                // IMPORTANTE: Reestruturar isso para usar o TokenUtils.peek() para procurar caracteres ao invés de só espaços
-                if(caracterAtual != 32 && caracterAtual != '\n' && caracterAtual != '\r'){//checa por espaços ou quebras de linha
+            while ((caracterAtual = pushback.read()) != -1){// caracterAtual >= 48 && caracterAtual <= 57
+                //System.out.println(tokenBuilder.toString());
+                if(tokenBuilder.length() == 1 && (caracterAtual >= 48 && caracterAtual <= 57)){// reconhece cadeias de números
+                    tokenBuilder.append(Character.toChars(caracterAtual)[0]);
+                    int peekChar;
+                    while((peekChar = TokenUtils.peek(pushback)) >= 48 && peekChar <= 57){// look ahead para ver se o próximo char é um número
+                        tokenBuilder.append(Character.toChars(pushback.read())[0]);
+                    }
+                    tokenList.add(new Token(TokenType.INT_LIT, tokenBuilder.toString().toCharArray()));
+                    tokenBuilder.setLength(0);// IMPORTANTE: Reestruturar isso para usar o TokenUtils.peek() para procurar caracteres ao invés de só espaços
+                }else if(caracterAtual != 32 && caracterAtual != '\n' && caracterAtual != '\r'){//checa por espaços ou quebras de linha
                     tokenBuilder.append(Character.toChars(caracterAtual)[0]);
                     if (TokenUtils.peek(pushback) == 59) {
                         Token tokenAtual = TokenUtils.checkToken(tokenBuilder);
                         if (tokenAtual != null) {
                             tokenList.add(tokenAtual);
-                            tokenList.add(new Token(TokenType.semicolon, new char[]{';'}));
+                            tokenList.add(new Token(TokenType.SEMICOLON, new char[]{Character.toChars(pushback.read())[0]}));
                         }
                         tokenBuilder.setLength(0);
                     }
@@ -39,7 +46,7 @@ public class Main {
             }
 
             if(caracterAtual == -1){
-                Token newToken = new Token(TokenType.id, tokenBuilder.toString().toCharArray());
+                Token newToken = new Token(TokenType.ID, tokenBuilder.toString().toCharArray());
                 tokenBuilder.setLength(0);
                 tokenList.add(newToken);
             }
@@ -47,11 +54,13 @@ public class Main {
             //fecha o buffer para não ter entrada a mais de dados
             reader.close();
 
-            //debug function
-            System.out.println("tamanho: " + tokenList.size());
+            //debug
+            System.out.println("--------------------------------DEBUG--------------------------------");
+            System.out.println("tamanho: " + tokenList.size()+ "\n");
             for (int i = 0; i < tokenList.size(); i++){
-                System.out.println(tokenList.get(i));
+                System.out.println("[Indice Token: " + i + "]\t||\t" + tokenList.get(i) + "\n");
             }
+            System.out.println("--------------------------------DEBUG--------------------------------");
 
         }catch (FileNotFoundException e){
             e.printStackTrace();
