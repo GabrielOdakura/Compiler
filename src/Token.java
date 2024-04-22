@@ -13,7 +13,7 @@ public class Token {
         }
     }
 
-    public ArrayList<Token> lerTokens(String path) throws IOException {
+    public static ArrayList<Token> lerTokens(String path) throws IOException {
         FileReader input = new FileReader(path);
         BufferedReader reader = new BufferedReader(input);
         PushbackReader pushback = new PushbackReader(reader);
@@ -85,7 +85,7 @@ public class Token {
         return tokenList;
     }
 
-    private Token reconhecerParenteses(int caracterAtual){
+    private static Token reconhecerParenteses(int caracterAtual){
         Token novoToken = null;
         if (caracterAtual == 40){// char '('
             novoToken = new Token(TokenType.abreParenteses, new char[]{'('});
